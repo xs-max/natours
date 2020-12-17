@@ -10,7 +10,7 @@ const User = require('../models/userModel');
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     // 1) Get the currently booked tour
     const tour = await Tour.findById(req.params.tourId)
-    // console.log(tour);
+    console.log(tour);
 
     // 2) create checkout session
     const session = await stripe.checkout.sessions.create({
@@ -66,7 +66,7 @@ exports.webhookCheckout = (req, res, next) => {
         return res.status(400).send(`Webhook error: ${err.message}` );
     }
 
-    if(event.type = 'checkout.session.complete') {
+    if(event.type = 'checkout.session.completed') {
         createBookingCheckout(event.data.object);
     }
 
