@@ -33,11 +33,17 @@ const server = app.listen(port, () => {
 });
 
 process.on('unhandledRejection', err => {
-    // console.log(err.name, err.message);
-    // console.log('Unhandled Rejection');
+    console.log(err.name, err.message);
+    console.log('Unhandled Rejection');
     server.close(() => {
         process.exit(1);
     });
     
 });
 
+process.on('SIGTERM', () => {
+    console.log('SIGTERM RECEIVED, SHUTTING down gracefully');
+    server.close(() => {
+        console.log('PROCESS TERMINATED');
+    })
+})
